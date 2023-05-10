@@ -13,14 +13,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(PaymentService::class, TheTellerPaymentService::class);
-    }
+     }
 
     /**
      * Bootstrap any application services.
      */
     public function boot(): void
     {
-        //
     }
+
+    public $singletons = [
+        PaymentService::class => TheTellerPaymentService::class
+    ];
 }
