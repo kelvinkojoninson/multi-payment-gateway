@@ -21,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('pay', [PaymentController::class, 'processPayment']);
-Route::post('paystack/callback', [PaymentController::class, "handlePaystackCallback"]);
+Route::post('paystack-webhook', [PaymentController::class, "handlePaystackCallback"]);

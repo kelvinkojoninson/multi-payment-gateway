@@ -1,66 +1,49 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Multi Payment Gateway
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Multi Payment Gateway refers to the ability to accept payments from customers through multiple payment processors or gateways. It means that a business can provide its customers with various options to pay for goods and services, such as credit card, debit card, bank transfers, PayPal, and more. By offering multiple payment gateways, businesses can increase their sales by providing more payment options and reduce the risk of lost sales due to payment issues. This can also help to improve customer experience by making the payment process smoother and more convenient. Integration of multiple payment gateways can be done through the use of payment gateway APIs or payment gateway integrations provided by e-commerce platforms.
 
-## About Laravel
+## Installation
+1. Clone the repository to your local machine.
+2. Run composer install to install dependencies.
+3. Configure your .env file with your credentials.
+4. Start the development server with php artisan serve.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Project Structure
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```php
+app/
+├── Http/
+│   ├── Controllers/
+│   │   └── PaymentController.php
+├── Providers/
+│   └── AppServiceProvider.php
+├── Traits/
+│   ├── PaymentService.php
+│   └── TheTellerPaymentService.php
+├── routes/
+│   └── api.php
+├── .env
+├── .env.example
+├── composer.json
+└── README.md
+```
+## API Endpoints
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The following endpoints are available in this API:
 
-## Learning Laravel
+- `/pay`: This endpoint handles requests related to riders.
+- `/paystack-webhook`: This endpoint handles callback requests related to the paystack payment gateway.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Controller Details
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+The following is a list of controllers and their corresponding files:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- `PaymentController`: `app/Controllers/api/PaymentController.php`
 
-## Laravel Sponsors
+## Trait Methods
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+The following is a list of Traits methods and their corresponding files:
 
-### Premium Partners
+- `PaymentService`: `app/Traits/PaymentService.php`
+- `TheTellerPaymentService`: `app/Services/api/v2/TheTellerPaymentService.php`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
