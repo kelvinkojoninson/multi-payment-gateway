@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Traits\PaymentService;
+use App\Services\PaymentService;
 
 class PaymentController extends Controller
 {
@@ -29,52 +29,39 @@ class PaymentController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                "status" => "failed",
+                "statusCode" => 500,
                 "message" => $validator->errors()->first()
             ]);
         }
 
-        // replace reference with $request->reference
-        $reference = bin2hex(random_bytes(8));
-        return $this->paymentService->processPaystackPayment($request->amount, $request->email, $reference);
-    }
-
-    public function handlePaystackCallback(Request $request)
-    {
         try {
-            // Get the payment details from the webhook
-            $paymentDetails = $request->all();
-
-            // Check if the transaction was successful
-            if ($paymentDetails['data']['status'] !== 'success') {
-                return response()->json([
-                    "status" => "failed",
-                    "message" => "Payment failed"
-                ]);
-            }
-
-            // Save the payment details in the database
-            // $transaction = new Transaction();
-            // $transaction->reference = $paymentDetails['data']['reference'];
-            // $transaction->status = $paymentDetails['data']['status'];
-            // $transaction->amount = $paymentDetails['data']['amount'] / 100; // convert pesewas to cedis
-            // $transaction->save();
-
-            // Send a success response to Paystack
+            // Replace reference with $request->reference
+            $reference = strtoupper(bin2hex(random_bytes(10)));
+            return $this->paymentService->processPaystackPayment($request->amount, $request->email, $reference);
+        } catch (\Throwable $e) {
+            // Return an error response with a message and a status code
             return response()->json([
-                'status' => 'success',
-                'message' => 'Payment received'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => "failed",
-                "message" => "Payment failed.",
-                "error" => [
-                    "msg" => $e->getMessage(),
-                    "file" => $e->getFile(),
-                    "line" => $e->getLine(),
+                'statusCode' => 500,
+                'message' => 'Payment initialization error',
+                'error' => [
+                    'msg' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
                 ]
             ]);
         }
+    }
+
+    public function handleCallback(Request $request)
+    {
+        if (!$request->reference) {
+            // Return a JSON response indicating the error with a status code
+            return response()->json([
+                'statusCode' => 500,
+                'message' => 'Transaction reference is required'
+            ]);
+        }
+
+        return $this->paymentService->verifyPaystackTransaction($request->reference);
     }
 }

@@ -17,7 +17,7 @@ app/
 │   │   └── PaymentController.php
 ├── Providers/
 │   └── AppServiceProvider.php
-├── Traits/
+├── Services/
 │   ├── PaymentService.php
 │   └── TheTellerPaymentService.php
 ├── routes/
@@ -44,6 +44,6 @@ The following is a list of controllers and their corresponding files:
 
 The following is a list of Traits methods and their corresponding files:
 
-- `PaymentService`: `app/Traits/PaymentService.php`
-- `TheTellerPaymentService`: `app/Services/api/v2/TheTellerPaymentService.php`
+- `PaymentService`: `app/Services/PaymentService.php`
+- `TheTellerPaymentService`: `app/Services/TheTellerPaymentService.php`
 

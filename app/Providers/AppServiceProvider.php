@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Traits\PaymentService;
-use App\Traits\TheTellerPaymentService;
+use App\Services\GlobalPaymentService;
+use App\Services\PaymentService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->singleton(PaymentService::class, GlobalPaymentService::class);
      }
 
     /**
@@ -21,8 +22,4 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
     }
-
-    public $singletons = [
-        PaymentService::class => TheTellerPaymentService::class
-    ];
 }
